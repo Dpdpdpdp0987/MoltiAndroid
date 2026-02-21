@@ -1,0 +1,9 @@
+{
+  "defaultModel": "free-minimax",
+  "telegram": {
+    "enabled": false
+  },
+  "mcp": {
+    "enabled": false
+  }
+}

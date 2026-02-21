@@ -4,84 +4,119 @@ Anleitung zur Installation von Molti/OpenClaw auf Android via Termux.
 
 ## 📱 Voraussetzungen
 
-- Android Smartphone mit Termux App
+- Android Smartphone mit **Termux** App (aus F-Droid oder Play Store)
 - GitHub Account (für Code)
 - Internetverbindung
 
-## 🚀 Installation
+---
 
-### 1. Termux updaten
+## 🚀 Schnell-Installation
+
 ```bash
-pkg update && pkg upgrade -y
+# Repository clonen
+git clone https://github.com/Dpdpdpdp0987/MoltiAndroid.git
+cd MoltiAndroid
+
+# Install-Script ausführen
+bash install_termux.sh
 ```
 
-### 2. Basis-Pakete installieren
+---
+
+## 📋 Manueller Setup (Schritt für Schritt)
+
+### 1. Termux Basis-Pakete
+
 ```bash
+# Pakete updaten
+pkg update && pkg upgrade -y
+
+# Basis-Pakete installieren
 pkg install git curl wget python nodejs
 ```
 
-### 3. Node.js Version checken (min. 18+)
-```bash
-node -v
-# Falls alt: pkg install nodejs-lts
-```
+### 2. OpenClaw installieren
 
-### 4. OpenClaw installieren
 ```bash
-# Clone OpenClaw
+# OpenClaw clonen
+cd ~
 git clone https://github.com/openclaw/openclaw.git
 cd openclaw
 
 # Dependencies installieren
 npm install
+```
 
-# OpenClaw starten
+### 3. Konfiguration
+
+Erstelle eine `openclaw.json` im openclaw-Ordner:
+
+```json
+{
+  "defaultModel": "free-minimax",
+  "telegram": {
+    "enabled": true,
+    "botToken": "DEIN_BOT_TOKEN"
+  }
+}
+```
+
+### 4. OpenClaw starten
+
+```bash
+cd ~/openclaw
 npm start
 ```
 
-### 5. Modell auswählen (FREE!)
+---
 
-Beim ersten Start wähle ein freies Modell:
-- **MiniMax Free** (empfohlen)
-- **Kimi Free**
-- **Qwen Free**
-- **DeepSeek Free**
+## 🎯 Modelle (alle FREE!)
+
+| Modell | Befehl | Beschreibung |
+|--------|--------|--------------|
+| MiniMax | `/model free-minimax` | Empfohlen! |
+| Kimi | `/model free-kimi` | Sehr gut! |
+| Qwen | `/model free-qwen` | Coder-freundlich |
+| DeepSeek | `/model free-deepseek` | Stark bei Reasoning |
+
+---
 
 ## 🔗 Verbindung zu Molti (Server)
 
-### Option A: Telegram Bot (einfach)
-1. Erstelle einen Telegram Bot @BotFather
-2. Trage den Token in OpenClaw ein
-3. Verbinde mit demselben Telegram Account wie auf dem Server
+### Option A: Telegram (einfach)
+1. Erstelle einen Bot bei @BotFather
+2. Kopiere den Token
+3. Füge ihn in openclaw.json ein
+4. Starte OpenClaw und spreche mit dem Bot
 
-### Option B: Direkte Verbindung (Server-IP)
-Trage in der config die Server-URL ein:
+### Option B: Direkte Server-Verbindung
+Trage in openclaw.json ein:
 ```json
 {
   "gatewayUrl": "https://deine-server-ip:3000"
 }
 ```
 
-## 🎯 Modelle (alle FREE)
+---
 
-In OpenClaw config (openclaw.json):
-```json
-{
-  "defaultModel": "free-minimax",
-  "availableModels": [
-    "free-minimax",
-    "free-kimi", 
-    "free-qwen",
-    "free-deepseek"
-  ]
-}
-```
+## 🆘 Troubleshooting
 
-## 📱 Täglicher Gebrauch
+**Problem:** npm start bleibt hängen
+→ Lösung: `npm run start:detached` oder Screen nutzen
+
+**Problem:** Keine Verbindung zum Server
+→ Firewall checken, gleiches WLAN nutzen
+
+**Problem:** Modell antwortet nicht
+→ anderes freies Modell probieren mit `/model free-kimi`
+
+---
+
+## 📱 Tägliche Nutzung
 
 ```bash
 # OpenClaw starten
-cd openclaw && npm start
+cd ~/openclaw && npm start
 
 # Modell wechseln
 /model free-minimax
@@ -90,39 +125,18 @@ cd openclaw && npm start
 /status
 ```
 
-## 🔧 Für Fortgeschrittene
+---
 
-### Autostart bei Termux-Start
+## 🔄 Auto-Start einrichten
+
 ```bash
 # In Termux:
 termux-setup-storage
 echo "cd ~/openclaw && npm start" >> ~/.bashrc
 ```
 
-### Cron Jobs auf Handy
-```bash
-# Einfache Erinnerungen
-crontab -e
-# 0 9 * * * termux-notification "Molti" "Guten Morgen!"
-```
-
-## 🐛 Troubleshooting
-
-**Problem:** npm start bleibt hängen
-→ Lösung: `npm run start: detached` oder Screen nutzen
-
-**Problem:** Keine Verbindung zum Server
-→ Firewall checken, gleiches WLAN nutzen
-
-**Problem:** Modell antwortet nicht
-→ anderes freies Modell probieren
-
 ---
 
-## 📞 Hilfe
+## 📦 Mit Molti Server verbinden
 
-Bei Fragen: Frag mich (Molti)!
-
----
-
-*Erstellt für Daniela mit ❤️*
+Wenn du dich mit MEINEM Server verbinden möchtest, frag mich nach dem Link! 🐙
